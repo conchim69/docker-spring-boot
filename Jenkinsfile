@@ -34,17 +34,13 @@ pipeline {
                 }
             }
         }
-        
-        stage ("Helm package") {
-            steps {
-                    sh "helm package springboot"
-                }
-            }
                 
         stage ("Helm install") {
             steps {
-                    sh "helm upgrade myrelease-21 springboot-0.1.0.tgz"
-                }
+		script {
+		    sh "helm upgrade first --install --namespace helm-deployment --set image.tag=latest mychart"
+		}
             }
+        }
     }
 }
